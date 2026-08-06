@@ -1,0 +1,23 @@
+class Car {
+    String color;
+    String type;
+
+    void printColor() {
+        System.out.println(this.color + " color " + this.type.toLowerCase() + " is moving");
+    }
+}
+
+public class OOPS {
+    public static void main(String args[]) {
+        Car car1 = new Car();
+        car1.color = "red";
+        car1.type = "Sedan";
+
+        Car car2 = new Car();
+        car2.color = "blue";
+        car2.type = "SUV";
+
+        car1.printColor();
+        car2.printColor();
+    }
+}
