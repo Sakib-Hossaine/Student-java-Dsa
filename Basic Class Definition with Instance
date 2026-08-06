@@ -1,0 +1,54 @@
+// Person.java - Class definition
+public class Person {
+    // Instance variables (fields)
+    private String name;
+    private int age;
+    private String email;
+    
+    // Static/class variable (shared across all instances)
+    private static int totalPersons = 0;
+    
+    // Constructor
+    public Person(String name, int age, String email) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        totalPersons++;
+    }
+    
+    // Default constructor
+    public Person() {
+        this("Unknown", 0, "unknown@example.com");
+    }
+    
+    // Instance methods
+    public void introduce() {
+        System.out.println("Hello, I'm " + name + ", " + age + " years old.");
+        System.out.println("Email: " + email);
+    }
+    
+    public void birthday() {
+        age++;
+        System.out.println(name + " is now " + age + " years old!");
+    }
+    
+    // Getters and Setters
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+    
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    
+    // Static method
+    public static int getTotalPersons() {
+        return totalPersons;
+    }
+    
+    @Override
+    public String toString() {
+        return "Person{name='" + name + "', age=" + age + ", email='" + email + "'}";
+    }
+}
