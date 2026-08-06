@@ -1,0 +1,218 @@
+class:
+public class Person { }  // Defines a class named "Person"
+public class Employee extends Person { }  // Defines a subclass
+
+
+extends:
+public class Employee extends Person { }
+// Employee inherits all non-private members from Person
+
+
+2. Access Modifiers
+public
+Accessible from anywhere - any class can access.
+public class Person { }           // Class accessible everywhere
+public String name;               // Field accessible everywhere
+public void introduce() { }       // Method accessible everywhere
+
+private
+
+Accessible only within the same class.
+private String name;              // Only Person class can access
+private int age;                  // Only Person class can access
+
+
+3. Variable-Related Keywords
+static
+
+Belongs to the class, not instances. Shared across all objects.
+java
+
+private static int totalPersons = 0;  // One variable shared by all Person objects
+// Access: Person.totalPersons (not person1.totalPersons)
+
+final
+
+Value cannot be changed after assignment (constant).
+java
+
+final double PI = 3.14159;         // Cannot be reassigned
+final String COMPANY_NAME = "ABC"; // Constant
+
+this
+
+Refers to the current instance of the class.
+java
+
+this.name = name;    // Distinguishes instance variable from parameter
+this.age = age;      // Refers to "this" object's age
+
+super
+
+Refers to the parent class.
+java
+
+super(name, age, email);  // Calls parent class constructor
+super.toString();         // Calls parent's toString() method
+
+4. Method-Related Keywords
+void
+
+Indicates a method returns nothing.
+java
+
+public void introduce() { }      // No return value
+public void birthday() { }       // No return value
+
+return
+
+Exits a method and optionally returns a value.
+java
+
+public String getName() { 
+    return name;                 // Returns the name value
+}
+public int getAge() { 
+    return age;                  // Returns the age value
+}
+
+@Override
+
+Annotation indicating a method overrides a parent class method.
+java
+
+@Override
+public String toString() { }     // Overrides Object's toString()
+
+5. Object Creation & Type Keywords
+new
+
+Creates a new instance (object) of a class.
+java
+
+Person person1 = new Person("Alice", 25, "alice@email.com");
+//              ^^^ Creates a new Person object in memory
+
+instanceof
+
+Checks if an object is an instance of a particular class.
+java
+
+if (person instanceof Employee) {    // Is 'person' an Employee?
+    Employee e = (Employee) person;  // Safe to cast
+}
+
+6. Control Flow Keywords
+if / else
+
+Conditional execution.
+java
+
+if (person instanceof Employee) {
+    // Execute this block if condition is true
+} else {
+    // Execute this block if condition is false
+}
+
+for
+
+Loop through a block of code a specified number of times.
+java
+
+for (Person p : people) {    // Enhanced for-each loop
+    System.out.println(p);
+}
+
+7. Data Type Keywords
+Primitive Types
+java
+
+int age = 25;          // 32-bit integer
+double salary = 75000; // 64-bit floating point
+boolean isValid = true; // true or false
+char grade = 'A';      // 16-bit Unicode character
+byte b = 127;          // 8-bit integer
+short s = 1000;        // 16-bit integer
+long l = 100000L;      // 64-bit integer (with L suffix)
+float f = 3.14f;       // 32-bit floating point (with f suffix)
+
+Reference Types
+java
+
+String name;           // Class type (String is a class)
+Person person;         // Custom class type
+Employee emp;          // Custom class type
+Person[] people;       // Array of Person objects
+
+8. Package & Import Keywords
+package (not shown but important)
+
+Defines the package/namespace for the class.
+java
+
+package com.example.myapp;
+
+import (not shown)
+
+Imports classes from other packages.
+java
+
+import java.util.ArrayList;
+import java.util.List;
+
+9. Exception Handling Keywords (partially shown)
+throws (not shown)
+
+Declares that a method might throw an exception.
+java
+
+public void readFile() throws IOException { }
+
+try / catch / finally (not shown)
+
+Handle exceptions.
+java
+
+try {
+    // Risky code
+} catch (Exception e) {
+    // Handle exception
+} finally {
+    // Always executed
+}
+
+10. Keywords in the Inheritance Example
+super (in constructor)
+java
+
+super(name, age, email);  // Must be first line in constructor
+// Calls Person's constructor with these parameters
+
+@Override (annotation)
+java
+
+@Override
+public String toString() { }  // Tells compiler this overrides parent method
+
+Complete Keyword Reference Table
+Keyword	Purpose	Example
+class	Defines a class	class Person { }
+public	Accessible everywhere	public String name;
+private	Accessible only in class	private int age;
+static	Belongs to class, not instance	static int count;
+final	Cannot be changed	final double PI = 3.14;
+void	Returns nothing	void print() { }
+return	Returns from method	return value;
+new	Creates object	new Person();
+this	Current instance	this.name = name;
+super	Parent class	super(name);
+extends	Inheritance	class Employee extends Person
+instanceof	Type check	obj instanceof Person
+if	Conditional	if (x > 5) { }
+else	Alternative	else { }
+for	Loop	for (int i=0; i<10; i++)
+int	32-bit integer	int num = 5;
+double	64-bit float	double d = 3.14;
+boolean	true/false	boolean flag = true;
+String	Text/string	String text = "Hello";
+@Override	Override annotation	@Override void run()
