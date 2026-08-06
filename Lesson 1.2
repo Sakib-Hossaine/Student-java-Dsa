@@ -1,0 +1,41 @@
+// Main.java - Creating and using instances
+public class Main {
+    public static void main(String[] args) {
+        // Creating instances using 'new' keyword
+        Person person1 = new Person("Alice", 25, "alice@email.com");
+        Person person2 = new Person("Bob", 30, "bob@email.com");
+        Person person3 = new Person();  // Using default constructor
+        
+        // Calling instance methods
+        person1.introduce();
+        person2.introduce();
+        person3.introduce();
+        
+        // Modifying instance state
+        person1.birthday();  // Alice is now 26
+        person1.setEmail("alice.new@email.com");
+        
+        // Accessing instance variables via getters
+        System.out.println("\nPerson1 details:");
+        System.out.println("Name: " + person1.getName());
+        System.out.println("Age: " + person1.getAge());
+        System.out.println("Email: " + person1.getEmail());
+        
+        // Using toString() (implicitly called)
+        System.out.println("\n" + person1);
+        System.out.println(person2);
+        
+        // Accessing static variable/method
+        System.out.println("\nTotal persons created: " + Person.getTotalPersons());
+        
+        // Creating an array of objects
+        Person[] people = new Person[2];
+        people[0] = new Person("Charlie", 35, "charlie@email.com");
+        people[1] = new Person("Diana", 28, "diana@email.com");
+        
+        System.out.println("\nArray of people:");
+        for (Person p : people) {
+            System.out.println(p);
+        }
+    }
+}
