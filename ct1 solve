@@ -1,0 +1,52 @@
+Ct1 solve;
+
+
+public class Main {
+    public static void main(String[] args) {
+        // 1) Declare int variable num and assign last 2 digits of registration number
+        // Example: If registration number is 123456, last 2 digits = 56
+        int num = 56; // Replace 56 with your actual last 2 digits
+
+        // 2) If num is divisible by 5
+        if (num % 5 == 0) {
+            System.out.println("Next 20 even numbers greater than " + num + ":");
+            int count = 0;
+            int current = num + 1;
+            while (count < 20) {
+                if (current % 2 == 0) {
+                    System.out.print(current + " ");
+                    count++;
+                }
+                current++;
+            }
+            System.out.println();
+        }
+        // 3) If num is not divisible by 5 but divisible by 7
+        else if (num % 7 == 0) {
+            System.out.println("Next 5 prime numbers greater than " + num + ":");
+            int count = 0;
+            int current = num + 1;
+            while (count < 5) {
+                if (isPrime(current)) {
+                    System.out.print(current + " ");
+                    count++;
+                }
+                current++;
+            }
+            System.out.println();
+        }
+        // If neither condition is met
+        else {
+            System.out.println("Number is neither divisible by 5 nor by 7.");
+        }
+    }
+
+    // Helper method to check if a number is prime
+    public static boolean isPrime(int n) {
+        if (n < 2) return false;
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+}
