@@ -1,0 +1,15 @@
+class Shape {
+    public void area() {
+    System.out.println("displays area");
+    }
+}
+
+class Triangle extends Shape {
+    I
+}
+
+public class OOPS {
+    Run | Debug
+    public static void main(String args[]) {
+    }
+}
