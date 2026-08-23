@@ -1,0 +1,119 @@
+abstract class Animal {
+    // Encapsulated fields - private access
+    private String name;
+    private int age;
+    
+    // Constructor
+    public Animal(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    // Getter methods - controlled access to private fields
+    public String getName() {
+        return name;
+    }
+    
+    public int getAge() {
+        return age;
+    }
+    
+    // Setter methods - controlled modification
+    public void setName(String name) {
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            System.out.println("Invalid name!");
+        }
+    }
+    
+    public void setAge(int age) {
+        if (age > 0) {
+            this.age = age;
+        } else {
+            System.out.println("Age must be positive!");
+        }
+    }
+    
+    // Abstract method
+    public abstract void walk();
+}
+
+class Horse extends Animal {
+    // Additional encapsulated field
+    private String breed;
+    
+    public Horse(String name, int age, String breed) {
+        super(name, age);
+        this.breed = breed;
+    }
+    
+    public String getBreed() {
+        return breed;
+    }
+    
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+    
+    @Override
+    public void walk() {
+        System.out.println(getName() + " (Horse) walks on 4 legs");
+    }
+}
+
+class Chicken extends Animal {
+    // Additional encapsulated field
+    private boolean canFly;
+    
+    public Chicken(String name, int age, boolean canFly) {
+        super(name, age);
+        this.canFly = canFly;
+    }
+    
+    public boolean isCanFly() {
+        return canFly;
+    }
+    
+    public void setCanFly(boolean canFly) {
+        this.canFly = canFly;
+    }
+    
+    @Override
+    public void walk() {
+        System.out.println(getName() + " (Chicken) walks on 2 legs");
+    }
+}
+
+public class OOPS {
+    public static void main(String args[]) {
+        // Creating objects with encapsulation
+        Animal horse = new Horse("Spirit", 5, "Arabian");
+        Animal chicken = new Chicken("Clucky", 2, false);
+        
+        // Using getter methods to access data
+        System.out.println("Horse name: " + horse.getName());
+        System.out.println("Horse age: " + horse.getAge());
+        
+        // Polymorphism in action
+        horse.walk();   // Output: Spirit (Horse) walks on 4 legs
+        chicken.walk(); // Output: Clucky (Chicken) walks on 2 legs
+        
+        // Demonstrating encapsulation - controlled access
+        horse.setName("Thunder");  // Valid
+        horse.setAge(-5);          // Invalid - prints error message
+        
+        // Array of animals
+        Animal[] animals = {
+            new Horse("Max", 3, "Thoroughbred"),
+            new Chicken("Henny", 1, false),
+            new Horse("Star", 4, "Mustang")
+        };
+        
+        for (Animal animal : animals) {
+            animal.walk();
+            // All animals have name due to encapsulation
+            System.out.println("  Age: " + animal.getAge());
+        }
+    }
+}
