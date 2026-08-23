@@ -1,0 +1,235 @@
+// ============ ACCOUNT CLASS (Encapsulation) ============
+
+// Any object can access public
+// differeent package sub class can access or main package
+// privet only can be accesd by own class
+class Account {
+    // Private fields - Encapsulation
+    private String password;
+    private double balance;
+    private String accountType;
+    
+    // Public fields (for demonstration)
+    public String name;
+    public String email;
+    
+    // Constructor
+    public Account() {
+        this.balance = 0.0;
+        this.accountType = "Savings";
+    }
+    
+    // Constructor Overloading (Method Overloading)
+    public Account(String accountType) {
+        this.balance = 0.0;
+        this.accountType = accountType;
+    }
+    
+    public Account(String accountType, double initialBalance) {
+        this.accountType = accountType;
+        this.balance = initialBalance;
+    }
+    
+    // ====== GETTERS & SETTERS (Encapsulation) ======
+    public String getPassword() {
+        // Additional security - can mask or validate
+        return this.password;
+    }
+    
+    public void setPassword(String pass) {
+        // Validation - minimum length check (Encapsulation)
+        if (pass.length() >= 4) {
+            this.password = pass;
+            System.out.println("✅ Password updated successfully!");
+        } else {
+            System.out.println("❌ Password must be at least 4 characters!");
+        }
+    }
+    
+    public double getBalance() {
+        return this.balance;
+    }
+    
+    public void setBalance(double balance) {
+        if (balance >= 0) {
+            this.balance = balance;
+        } else {
+            System.out.println("❌ Balance cannot be negative!");
+        }
+    }
+    
+    public String getAccountType() {
+        return this.accountType;
+    }
+    
+    // ====== METHOD OVERLOADING (Compile-time Polymorphism) ======
+    public void deposit(double amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            System.out.println("💰 Deposited: $" + amount);
+            System.out.println("📊 New Balance: $" + this.balance);
+        } else {
+            System.out.println("❌ Deposit amount must be positive!");
+        }
+    }
+    
+    // Overloaded deposit method with description
+    public void deposit(double amount, String description) {
+        deposit(amount); // Calls the first deposit method
+        System.out.println("📝 Description: " + description);
+    }
+    
+    // Overloaded deposit method with multiple transactions
+    public void deposit(double[] amounts) {
+        double total = 0;
+        for (double amt : amounts) {
+            if (amt > 0) {
+                total += amt;
+                this.balance += amt;
+            }
+        }
+        System.out.println("💰 Deposited multiple amounts: Total = $" + total);
+        System.out.println("📊 New Balance: $" + this.balance);
+    }
+    
+    // ====== POLYMORPHISM SUPPORT ======
+    public void displayAccountInfo() {
+        System.out.println("👤 Name: " + name);
+        System.out.println("📧 Email: " + email);
+        System.out.println("🏦 Account Type: " + accountType);
+        System.out.println("💰 Balance: $" + balance);
+    }
+    
+    // Method to be overridden (for polymorphism)
+    public double calculateInterest() {
+        // Base interest rate for general account
+        return this.balance * 0.02; // 2% interest
+    }
+}
+
+
+// ============ SAVINGS ACCOUNT (Inheritance + Polymorphism) ============
+class SavingsAccount extends Account {
+    private double interestRate;
+    
+    public SavingsAccount() {
+        super("Savings");
+        this.interestRate = 0.04; // 4% interest
+    }
+    
+    // Overriding the calculateInterest method (Runtime Polymorphism)
+    @Override
+    public double calculateInterest() {
+        return getBalance() * interestRate; // 4% interest
+    }
+    
+    // Additional method
+    public void setInterestRate(double rate) {
+        this.interestRate = rate;
+    }
+}
+
+
+// ============ CURRENT ACCOUNT (Inheritance + Polymorphism) ============
+class CurrentAccount extends Account {
+    private double overdraftLimit;
+    
+    public CurrentAccount() {
+        super("Current");
+        this.overdraftLimit = 1000.0;
+    }
+    
+    // Overriding the calculateInterest method (Runtime Polymorphism)
+    @Override
+    public double calculateInterest() {
+        return getBalance() * 0.01; // 1% interest (lower for current accounts)
+    }
+    
+    public void setOverdraftLimit(double limit) {
+        this.overdraftLimit = limit;
+    }
+    
+    @Override
+    public void displayAccountInfo() {
+        super.displayAccountInfo();
+        System.out.println("💰 Overdraft Limit: $" + overdraftLimit);
+    }
+}
+
+
+// ============ MAIN BANK CLASS ============
+public class Bank {
+    public static void main(String[] args) {
+        System.out.println("========== ENCAPSULATION DEMO ==========\n");
+        
+        // Creating an account (Encapsulation in action)
+        Account account1 = new Account();
+        account1.name = "Apna College";
+        account1.email = "apnacollege@gmail.com";
+        
+        // Setting password using setter (Encapsulation)
+        account1.setPassword("abcd"); // ✅ Valid
+        // account1.setPassword("abc"); // ❌ Would fail validation
+        
+        // Getting password using getter (Encapsulation)
+        System.out.println("🔑 Password: " + account1.getPassword());
+        System.out.println();
+        
+        // ============================================
+        System.out.println("========== METHOD OVERLOADING DEMO ==========\n");
+        
+        // 1. Single deposit
+        account1.deposit(500.0);
+        System.out.println();
+        
+        // 2. Deposit with description (Overloaded)
+        account1.deposit(250.0, "Salary deposit");
+        System.out.println();
+        
+        // 3. Multiple deposits (Overloaded)
+        double[] multipleDeposits = {100.0, 200.0, 50.0};
+        account1.deposit(multipleDeposits);
+        System.out.println();
+        
+        // ============================================
+        System.out.println("========== POLYMORPHISM DEMO ==========\n");
+        
+        // Creating different account types
+        Account savings = new SavingsAccount();
+        savings.name = "John Doe";
+        savings.email = "john@gmail.com";
+        savings.deposit(1000.0);
+        
+        Account current = new CurrentAccount();
+        current.name = "Jane Smith";
+        current.email = "jane@gmail.com";
+        current.deposit(500.0);
+        
+        System.out.println("\n--- Savings Account ---");
+        savings.displayAccountInfo();
+        System.out.println("📈 Interest: $" + savings.calculateInterest());
+        
+        System.out.println("\n--- Current Account ---");
+        current.displayAccountInfo();
+        System.out.println("📈 Interest: $" + current.calculateInterest());
+        
+        // ============================================
+        System.out.println("\n========== POLYMORPHISM WITH ARRAY ==========\n");
+        
+        // Polymorphic array - all treated as Account
+        Account[] accounts = {
+            new SavingsAccount(),
+            new CurrentAccount(),
+            new Account("Fixed Deposit")
+        };
+        
+        for (Account acc : accounts) {
+            acc.name = "Customer";
+            acc.email = "customer@email.com";
+            acc.deposit(2000.0);
+            System.out.println("Account Type: " + acc.getAccountType());
+            System.out.println("Interest: $" + acc.calculateInterest());
+            System.out.println("------------------------");
+        }
+    }
+}
