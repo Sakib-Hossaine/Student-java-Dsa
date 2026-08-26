@@ -1,0 +1,39 @@
+class Calculator {
+    // Method Overloading – Same method name, different parameters
+    // Method 1: Adds two integers
+    int add(int a, int b) {
+        return a + b;
+    }
+    
+    // Method 2: Adds three integers (different number of parameters)
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    // Method 3: Adds two double values (different parameter types)
+    double add(double a, double b) {
+        return a + b;
+    }
+    
+    // Method 4: Adds an integer and a double (different order of parameters)
+    double add(int a, double b) {
+        return a + b;
+    }
+    
+    // Method 5: Adds a double and an integer (different order)
+    double add(double a, int b) {
+        return a + b;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        
+        System.out.println(calc.add(5, 10));           // Calls Method 1 → 15
+        System.out.println(calc.add(5, 10, 15));       // Calls Method 2 → 30
+        System.out.println(calc.add(5.5, 2.5));        // Calls Method 3 → 8.0
+        System.out.println(calc.add(5, 2.5));          // Calls Method 4 → 7.5
+        System.out.println(calc.add(5.5, 2));          // Calls Method 5 → 7.5
+    }
+}
