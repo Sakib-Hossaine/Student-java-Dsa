@@ -1,0 +1,50 @@
+// Method Overriding – Child class redefines parent class method
+// Parent class
+class Animal {
+    void sound() {
+        System.out.println("Animal makes a sound");
+    }
+    
+    void eat() {
+        System.out.println("Animal eats food");
+    }
+}
+
+// Child class 1
+class Dog extends Animal {
+    @Override   // Optional but recommended (shows intent)
+    void sound() {
+        System.out.println("Dog barks: Woof! Woof!");
+    }
+}
+
+// Child class 2
+class Cat extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Cat meows: Meow! Meow!");
+    }
+    
+    // Child can also have its own unique method
+    void scratch() {
+        System.out.println("Cat scratches");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal animal1 = new Animal();
+        Animal animal2 = new Dog();    // Parent reference, Dog object
+        Animal animal3 = new Cat();    // Parent reference, Cat object
+        
+        animal1.sound();  // → Animal makes a sound
+        animal2.sound();  // → Dog barks: Woof! Woof!  (Overridden)
+        animal3.sound();  // → Cat meows: Meow! Meow!  (Overridden)
+        
+        animal1.eat();    // → Animal eats food  (Not overridden)
+        animal2.eat();    // → Animal eats food  (Inherited from parent)
+        animal3.eat();    // → Animal eats food  (Inherited from parent)
+        
+        // animal3.scratch();  // ❌ ERROR: Parent reference can't call child-only methods
+    }
+}
