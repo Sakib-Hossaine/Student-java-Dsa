@@ -72,7 +72,9 @@ class Account {
             System.out.println("❌ Deposit amount must be positive!");
         }
     }
-    
+    // Static, Final not Overridable
+    // over load same class and override different class or parent chinlder class
+    // Java Main method still not oevrridable
     // Overloaded deposit method with description
     public void deposit(double amount, String description) {
         deposit(amount); // Calls the first deposit method
