@@ -1,5 +1,7 @@
 class Calculator {
     // Method Overloading – Same method name, different parameters
+    // int add(int a, int b) { return a + b; }
+   //double add(int a, int b) { return a + b; }  // ❌ ERROR: Same parameters, only return type changed
     // Method 1: Adds two integers
     int add(int a, int b) {
         return a + b;
