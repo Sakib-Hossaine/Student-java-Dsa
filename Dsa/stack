@@ -1,0 +1,146 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+template <typename T>
+class Stack {
+private:
+    vector<T> elements;  // Dynamic array to store stack elements
+    int maxSize;         // Maximum size (-1 for unlimited)
+    
+public:
+    // Constructor
+    Stack(int size = -1) : maxSize(size) {}
+    
+    // 1. Push - Add element to top
+    void push(T value) {
+        if (isFull()) {
+            cout << "Stack Overflow! Cannot push " << value << endl;
+            return;
+        }
+        elements.push_back(value);
+        cout << "Pushed: " << value << endl;
+    }
+    
+    // 2. Pop - Remove element from top
+    T pop() {
+        if (isEmpty()) {
+            cout << "Stack Underflow! Cannot pop." << endl;
+            return T();  // Return default value
+        }
+        T value = elements.back();
+        elements.pop_back();
+        cout << "Popped: " << value << endl;
+        return value;
+    }
+    
+    // 3. Top/Peek - Get top element without removing
+    T top() {
+        if (isEmpty()) {
+            cout << "Stack is empty!" << endl;
+            return T();
+        }
+        return elements.back();
+    }
+    
+    // 4. isEmpty - Check if stack is empty
+    bool isEmpty() {
+        return elements.empty();
+    }
+    
+    // 5. isFull - Check if stack is full
+    bool isFull() {
+        if (maxSize == -1) return false;  // Unlimited size
+        return elements.size() >= maxSize;
+    }
+    
+    // 6. Size - Get number of elements
+    int size() {
+        return elements.size();
+    }
+    
+    // 7. Display - Print all elements
+    void display() {
+        if (isEmpty()) {
+            cout << "Stack is empty!" << endl;
+            return;
+        }
+        cout << "Stack elements (top to bottom): ";
+        for (int i = elements.size() - 1; i >= 0; i--) {
+            cout << elements[i] << " ";
+        }
+        cout << endl;
+    }
+    
+    // 8. Clear - Remove all elements
+    void clear() {
+        elements.clear();
+        cout << "Stack cleared!" << endl;
+    }
+    
+    // 9. Search - Find element position from top
+    int search(T value) {
+        for (int i = elements.size() - 1; i >= 0; i--) {
+            if (elements[i] == value) {
+                return elements.size() - i;  // Position from top (1-based)
+            }
+        }
+        return -1;  // Not found
+    }
+};
+
+// Main function to demonstrate all operations
+int main() {
+    // Create a stack with maximum size 5
+    Stack<int> stack(5);
+    
+    cout << "========== STACK OPERATIONS ==========\n\n";
+    
+    // 1. Push operations
+    cout << "1. Pushing elements:\n";
+    stack.push(10);
+    stack.push(20);
+    stack.push(30);
+    stack.push(40);
+    stack.push(50);
+    stack.push(60);  // This will show overflow
+    
+    // 2. Display
+    cout << "\n2. Display stack:\n";
+    stack.display();
+    
+    // 3. Top element
+    cout << "\n3. Top element: " << stack.top() << endl;
+    
+    // 4. Size
+    cout << "\n4. Stack size: " << stack.size() << endl;
+    
+    // 5. isEmpty
+    cout << "\n5. Is stack empty? " << (stack.isEmpty() ? "Yes" : "No") << endl;
+    
+    // 6. isFull
+    cout << "\n6. Is stack full? " << (stack.isFull() ? "Yes" : "No") << endl;
+    
+    // 7. Pop operations
+    cout << "\n7. Popping elements:\n";
+    stack.pop();
+    stack.pop();
+    
+    // 8. Display after pop
+    cout << "\n8. Display after pop:\n";
+    stack.display();
+    
+    // 9. Search
+    cout << "\n9. Search for 30: Position from top = " << stack.search(30) << endl;
+    cout << "   Search for 100: Position from top = " << stack.search(100) << endl;
+    
+    // 10. Peek (without removing)
+    cout << "\n10. Peek top element: " << stack.top() << endl;
+    
+    // 11. Clear
+    cout << "\n11. Clearing stack:\n";
+    stack.clear();
+    stack.display();
+    
+    return 0;
+}
