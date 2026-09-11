@@ -1,0 +1,112 @@
+#include <iostream>
+using namespace std;
+
+#define SIZE 5
+
+int queue[SIZE];
+int front = -1;
+int rear = -1;
+
+// Insert / Enqueue
+void enqueue(int value)
+{
+    // Check Overflow
+    if ((rear + 1) % SIZE == front)
+    {
+        cout << "Queue Overflow!" << endl;
+        return;
+    }
+
+    // First element
+    if (front == -1)
+    {
+        front = 0;
+        rear = 0;
+    }
+    else
+    {
+        rear = (rear + 1) % SIZE;
+    }
+
+    queue[rear] = value;
+    cout << value << " inserted." << endl;
+}
+
+// Delete / Dequeue
+void dequeue()
+{
+    // Check Underflow
+    if (front == -1)
+    {
+        cout << "Queue Underflow!" << endl;
+        return;
+    }
+
+    cout << queue[front] << " deleted." << endl;
+
+    // Only one element
+    if (front == rear)
+    {
+        front = -1;
+        rear = -1;
+    }
+    else
+    {
+        front = (front + 1) % SIZE;
+    }
+}
+
+// Display
+void display()
+{
+    if (front == -1)
+    {
+        cout << "Queue is empty!" << endl;
+        return;
+    }
+
+    cout << "Queue: ";
+
+    int i = front;
+
+    while (true)
+    {
+        cout << queue[i] << " ";
+
+        if (i == rear)
+            break;
+
+        i = (i + 1) % SIZE;
+    }
+
+    cout << endl;
+}
+
+int main()
+{
+    // Random insertion
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    enqueue(40);
+    enqueue(50);
+
+    display();
+
+    // Delete two elements
+    dequeue();
+    dequeue();
+
+    display();
+
+    // Circular insertion
+    enqueue(60);
+    enqueue(70);
+
+    display();
+
+    // Try overflow
+    enqueue(80);
+
+    return 0;
+}
