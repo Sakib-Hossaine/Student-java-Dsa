@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+
+#define SIZE 5
+
+int queue[SIZE];
+int front = -1;
+int rear = -1;
+
+void enqueue(int value)
+{
+    // Queue is full
+    if (rear == SIZE - 1)
+    {
+        cout << "Overflow! Removing first element..." << endl;
+
+        // Shift elements to the left
+        for (int i = 0; i < rear; i++)
+        {
+            queue[i] = queue[i + 1];
+        }
+
+        rear--;
+        front = 0;
+    }
+
+    // Insert new element
+    if (front == -1)
+        front = 0;
+
+    rear++;
+    queue[rear] = value;
+
+    cout << value << " inserted." << endl;
+}
+
+void dequeue()
+{
+    if (front == -1 || front > rear)
+    {
+        cout << "Underflow!" << endl;
+    }
+    else
+    {
+        cout << queue[front] << " deleted." << endl;
+        front++;
+
+        if (front > rear)
+        {
+            front = -1;
+            rear = -1;
+        }
+    }
+}
+
+void display()
+{
+    if (front == -1)
+    {
+        cout << "Queue is empty." << endl;
+    }
+    else
+    {
+        cout << "Queue: ";
+
+        for (int i = front; i <= rear; i++)
+        {
+            cout << queue[i] << " ";
+        }
+
+        cout << endl;
+    }
+}
+
+int main()
+{
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    enqueue(40);
+    enqueue(50);
+
+    display();
+
+    // Overflow but still insert
+    enqueue(60);
+    display();
+
+    enqueue(70);
+    display();
+
+    dequeue();
+    display();
+
+    return 0;
+}
