@@ -1,0 +1,67 @@
+#include <iostream>
+//https://chat.deepseek.com/share/c98uh5p7yryfzmpf6s
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    LinkedList() : head(nullptr) {}
+
+    // Insert at front — O(1)
+    void pushFront(int val) {
+        Node* n = new Node(val);
+        n->next = head;
+        head = n;
+    }
+
+    // Insert at back — O(n)
+    void pushBack(int val) {
+        Node* n = new Node(val);
+        if (!head) { head = n; return; }
+        Node* cur = head;
+        while (cur->next) cur = cur->next;
+        cur->next = n;
+    }
+
+    // Delete first occurrence — O(n)
+    void remove(int val) {
+        if (!head) return;
+        if (head->data == val) {
+            Node* tmp = head;
+            head = head->next;
+            delete tmp;
+            return;
+        }
+        Node* cur = head;
+        while (cur->next && cur->next->data != val)
+            cur = cur->next;
+        if (cur->next) {
+            Node* tmp = cur->next;
+            cur->next = tmp->next;
+            delete tmp;
+        }
+    }
+
+    // Search — O(n)
+    bool find(int val) const {
+        for (Node* cur = head; cur; cur = cur->next)
+            if (cur->data == val) return true;
+        return false;
+    }
+
+    // Print
+    void print() const {
+        for (Node* cur = head; cur; cur = cur->next)
+            std::cout << cur->data << " -> ";
+        std::cout << "nullptr\n";
+    }
+
+    // Destructor — free all nodes
+    ~LinkedList() {
+        while (head) {
+            Node* tmp = head;
+            head = head->next;
+            delete tmp;
+        }
+    }
+};
