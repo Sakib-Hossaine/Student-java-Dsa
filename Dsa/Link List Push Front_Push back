@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = nullptr;
+    }
+};
+
+class LinkedList {
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    LinkedList() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    // Add node at the front
+    void pushFront(int value) {
+        Node* newNode = new Node(value);
+
+        // If list is empty
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        }
+        else {
+            newNode->next = head;
+            head = newNode;
+        }
+    }
+
+    // Add node at the back
+    void pushBack(int value) {
+        Node* newNode = new Node(value);
+
+        // If list is empty
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        }
+        else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Print list
+    void print() {
+        Node* current = head;
+
+        while (current != nullptr) {
+            cout << current->data << " -> ";
+            current = current->next;
+        }
+
+        cout << "NULL\n";
+    }
+};
+
+int main() {
+    LinkedList list;
+
+    list.pushFront(10);
+    list.print();
+
+    list.pushFront(20);
+    list.print();
+
+    list.pushBack(30);
+    list.print();
+
+    list.pushBack(40);
+    list.print();
+
+    list.pushFront(50);
+    list.print();
+
+    return 0;
+}
