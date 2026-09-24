@@ -1,0 +1,197 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = nullptr;
+    }
+};
+
+class LinkedList {
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    LinkedList() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    // Insert at front
+    void pushFront(int value) {
+        Node* newNode = new Node(value);
+
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        }
+        else {
+            newNode->next = head;
+            head = newNode;
+        }
+    }
+
+    // Insert at back
+    void pushBack(int value) {
+        Node* newNode = new Node(value);
+
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        }
+        else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Insert at any position
+    void insert(int val, int pos) {
+
+        // Invalid position
+        if (pos < 0) {
+            cout << "Invalid position\n";
+            return;
+        }
+
+        // Insert at front
+        if (pos == 0) {
+            pushFront(val);
+            return;
+        }
+
+        Node* temp = head;
+
+        // Move to the node before the position
+        for (int i = 0; i < pos - 1; i++) {
+
+            if (temp == nullptr) {
+                cout << "Invalid position\n";
+                return;
+            }
+
+            temp = temp->next;
+        }
+
+        // Position is outside the list
+        if (temp == nullptr) {
+            cout << "Invalid position\n";
+            return;
+        }
+
+        Node* newNode = new Node(val);
+
+        newNode->next = temp->next;
+        temp->next = newNode;
+
+        // If inserted at the end
+        if (newNode->next == nullptr) {
+            tail = newNode;
+        }
+    }
+
+    // Delete from front
+    void popFront() {
+
+        if (head == nullptr) {
+            cout << "List is empty!\n";
+            return;
+        }
+
+        Node* temp = head;
+
+        head = head->next;
+
+        if (head == nullptr) {
+            tail = nullptr;
+        }
+
+        delete temp;
+    }
+
+    // Delete from back
+    void popBack() {
+
+        if (head == nullptr) {
+            cout << "List is empty!\n";
+            return;
+        }
+
+        // Only one node
+        if (head == tail) {
+            delete head;
+            head = nullptr;
+            tail = nullptr;
+            return;
+        }
+
+        Node* temp = head;
+
+        // Find second-last node
+        while (temp->next != tail) {
+            temp = temp->next;
+        }
+
+        delete tail;
+
+        tail = temp;
+        tail->next = nullptr;
+    }
+
+    // Print list
+    void print() {
+        Node* current = head;
+
+        while (current != nullptr) {
+            cout << current->data << " -> ";
+            current = current->next;
+        }
+
+        cout << "NULL\n";
+    }
+};
+
+int main() {
+
+    LinkedList list;
+
+    list.pushFront(10);
+    list.pushBack(20);
+    list.pushBack(30);
+    list.pushBack(40);
+
+    cout << "Original list:\n";
+    list.print();
+
+    // Insert 50 at position 2
+    list.insert(50, 2);
+
+    cout << "\nAfter inserting 50 at position 2:\n";
+    list.print();
+
+    // Insert 60 at position 0
+    list.insert(60, 0);
+
+    cout << "\nAfter inserting 60 at position 0:\n";
+    list.print();
+
+    // Delete from front
+    list.popFront();
+
+    cout << "\nAfter popFront:\n";
+    list.print();
+
+    // Delete from back
+    list.popBack();
+
+    cout << "\nAfter popBack:\n";
+    list.print();
+
+    return 0;
+}
