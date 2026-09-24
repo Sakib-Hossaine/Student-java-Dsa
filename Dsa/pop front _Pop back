@@ -1,0 +1,148 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = nullptr;
+    }
+};
+
+class LinkedList {
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    LinkedList() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    // Add node at the front
+    void pushFront(int value) {
+        Node* newNode = new Node(value);
+
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        }
+        else {
+            newNode->next = head;
+            head = newNode;
+        }
+    }
+
+    // Add node at the back
+    void pushBack(int value) {
+        Node* newNode = new Node(value);
+
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        }
+        else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Remove node from the front
+    void popFront() {
+        // If list is empty
+        if (head == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+
+        Node* temp = head;
+        head = head->next;
+
+        // If list becomes empty
+        if (head == nullptr) {
+            tail = nullptr;
+        }
+
+        delete temp;
+    }
+
+    // Remove node from the back
+    void popBack() {
+        // If list is empty
+        if (head == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+
+        // If there is only one node
+        if (head == tail) {
+            delete head;
+            head = nullptr;
+            tail = nullptr;
+            return;
+        }
+
+        // Find the second-last node
+        Node* current = head;
+
+        while (current->next != tail) {
+            current = current->next;
+        }
+
+        delete tail;
+        tail = current;
+        tail->next = nullptr;
+    }
+
+    // Print list
+    void print() {
+        Node* current = head;
+
+        while (current != nullptr) {
+            cout << current->data << " -> ";
+            current = current->next;
+        }
+
+        cout << "NULL\n";
+    }
+};
+
+int main() {
+    LinkedList list;
+
+    list.pushFront(10);
+    list.print();
+
+    list.pushFront(20);
+    list.print();
+
+    list.pushBack(30);
+    list.print();
+
+    list.pushBack(40);
+    list.print();
+
+    list.pushFront(50);
+    list.print();
+
+    // Pop from front
+    cout << "\nAfter popFront():\n";
+    list.popFront();
+    list.print();
+
+    // Pop from back
+    cout << "\nAfter popBack():\n";
+    list.popBack();
+    list.print();
+
+    // Pop from back again
+    cout << "\nAfter another popBack():\n";
+    list.popBack();
+    list.print();
+
+    return 0;
+}
