@@ -1,0 +1,163 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* prev;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        prev = nullptr;
+        next = nullptr;
+    }
+};
+
+class DoublyLinkedList {
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    DoublyLinkedList() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    // Push at front
+    void pushFront(int value) {
+        Node* newNode = new Node(value);
+
+        // Empty list
+        if (head == nullptr) {
+            head = tail = newNode;
+        }
+        else {
+            newNode->next = head;
+            head->prev = newNode;
+            head = newNode;
+        }
+    }
+
+    // Push at back
+    void pushBack(int value) {
+        Node* newNode = new Node(value);
+
+        // Empty list
+        if (tail == nullptr) {
+            head = tail = newNode;
+        }
+        else {
+            newNode->prev = tail;
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    // Delete node at a position
+    // Position starts from 1
+    void deleteAt(int position) {
+
+        if (head == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+
+        // Delete first node
+        if (position == 1) {
+            Node* temp = head;
+
+            head = head->next;
+
+            if (head != nullptr)
+                head->prev = nullptr;
+            else
+                tail = nullptr;
+
+            delete temp;
+            return;
+        }
+
+        Node* temp = head;
+
+        // Move to required position
+        for (int i = 1; i < position && temp != nullptr; i++) {
+            temp = temp->next;
+        }
+
+        // Position doesn't exist
+        if (temp == nullptr) {
+            cout << "Invalid position!" << endl;
+            return;
+        }
+
+        // Delete last node
+        if (temp == tail) {
+            tail = temp->prev;
+            tail->next = nullptr;
+            delete temp;
+            return;
+        }
+
+        // Delete middle node
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+
+        delete temp;
+    }
+
+    // Display from head to tail
+    void displayForward() {
+        Node* temp = head;
+
+        cout << "Forward: ";
+
+        while (temp != nullptr) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+
+        cout << endl;
+    }
+
+    // Display from tail to head
+    void displayBackward() {
+        Node* temp = tail;
+
+        cout << "Backward: ";
+
+        while (temp != nullptr) {
+            cout << temp->data << " ";
+            temp = temp->prev;
+        }
+
+        cout << endl;
+    }
+};
+
+int main() {
+
+    DoublyLinkedList list;
+
+    // Push Front
+    list.pushFront(20);
+    list.pushFront(10);
+
+    // Push Back
+    list.pushBack(30);
+    list.pushBack(40);
+
+    list.displayForward();
+    list.displayBackward();
+
+    // Delete position 2
+    list.deleteAt(2);
+
+    cout << "\nAfter deleting position 2:" << endl;
+
+    list.displayForward();
+    list.displayBackward();
+
+    return 0;
+}
