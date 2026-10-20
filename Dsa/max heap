@@ -1,0 +1,128 @@
+#include <iostream>
+using namespace std;
+
+const int MAX_SIZE = 100;   // maximum number of elements
+
+int heap[MAX_SIZE];
+int count = 0;              // how many elements are currently in the heap
+
+
+// ---------- Helper functions ----------
+
+// Swap two values
+void swapValues(int &a, int &b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+// Move the element at index i UP until the heap property is fixed
+void heapifyUp(int i) {
+    while (i > 0) {
+        int parent = (i - 1) / 2;
+
+        // If parent is smaller than child, swap them
+        if (heap[parent] < heap[i]) {
+            swapValues(heap[parent], heap[i]);
+            i = parent;       // move up
+        } else {
+            break;            // already in correct place
+        }
+    }
+}
+
+// Move the element at index i DOWN until the heap property is fixed
+void heapifyDown(int i) {
+    while (true) {
+        int left  = 2 * i + 1;
+        int right = 2 * i + 2;
+        int largest = i;
+
+        // Check left child
+        if (left < count && heap[left] > heap[largest])
+            largest = left;
+
+        // Check right child
+        if (right < count && heap[right] > heap[largest])
+            largest = right;
+
+        // If a child is bigger, swap and continue
+        if (largest != i) {
+            swapValues(heap[i], heap[largest]);
+            i = largest;
+        } else {
+            break;            // already in correct place
+        }
+    }
+}
+
+
+// ---------- Main heap operations ----------
+
+// Add a new value
+void insert(int value) {
+    if (count == MAX_SIZE) {
+        cout << "Heap is full!\n";
+        return;
+    }
+
+    heap[count] = value;   // put at the end
+    count++;
+    heapifyUp(count - 1);  // fix the heap
+}
+
+// Return the maximum value (root)
+int getMax() {
+    if (count == 0) {
+        cout << "Heap is empty!\n";
+        return -1;
+    }
+    return heap[0];
+}
+
+// Remove and return the maximum value
+int extractMax() {
+    if (count == 0) {
+        cout << "Heap is empty!\n";
+        return -1;
+    }
+
+    int maxValue = heap[0];
+
+    // Move the last element to the root
+    heap[0] = heap[count - 1];
+    count--;
+
+    heapifyDown(0);        // fix the heap
+
+    return maxValue;
+}
+
+// Print the heap array
+void printHeap() {
+    for (int i = 0; i < count; i++)
+        cout << heap[i] << " ";
+    cout << endl;
+}
+
+
+// ---------- main ----------
+
+int main() {
+    insert(10);
+    insert(20);
+    insert(5);
+    insert(30);
+    insert(15);
+
+    cout << "Heap: ";
+    printHeap();                       // 30 20 5 10 15
+
+    cout << "Max: " << getMax() << endl;   // 30
+
+    cout << "Removed: " << extractMax() << endl;   // 30
+    cout << "Heap after removing: ";
+    printHeap();                       // 20 15 5 10
+
+    return 0;
+}
