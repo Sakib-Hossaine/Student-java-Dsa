@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+//Max heap delete korle ascending order sort hoy auto
 
 const int MAX_SIZE = 100;   // maximum number of elements
 
